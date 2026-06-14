@@ -6,6 +6,8 @@ from ibm_watsonx_ai import Credentials
 from ibm_watsonx_ai.foundation_models import ModelInference
 
 load_dotenv()
+from setup_db import create_database
+create_database()
 
 client = chromadb.PersistentClient(path="./chroma_db")
 
@@ -65,4 +67,3 @@ def get_answer(query):
     answer = response["results"][0]["generated_text"].strip()
 
     return answer, retrieved_chunks
-print(get_answer("How should I store potatoes?"))
