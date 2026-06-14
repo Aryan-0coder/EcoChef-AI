@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoChef AI</title>
+
+
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:'Segoe UI',sans-serif;
+    }
+
+    body{
+        background:#f4f7f4;
+        min-height:100vh;
+        display:flex;
+        justify-content:center;
+        padding:30px;
+    }
+
+    .container{
+        width:100%;
+        max-width:1000px;
+        background:white;
+        border-radius:20px;
+        box-shadow:0 10px 30px rgba(0,0,0,0.08);
+        overflow:hidden;
+    }
+
+    .header{
+        background:#2e7d32;
+        color:white;
+        padding:25px;
+        text-align:center;
+    }
+
+    .header h1{
+        margin-bottom:8px;
+    }
+
+    .header p{
+        opacity:0.9;
+    }
+
+    .chat-container{
+        padding:25px;
+        min-height:450px;
+    }
+
+    .user-message{
+        background:#dff3e0;
+        padding:15px;
+        border-radius:15px;
+        margin-bottom:20px;
+        margin-left:120px;
+    }
+
+    .bot-message{
+        background:#f1f8e9;
+        border-left:5px solid #43a047;
+        padding:18px;
+        border-radius:15px;
+        margin-right:120px;
+    }
+
+    .label{
+        font-weight:bold;
+        margin-bottom:10px;
+        display:block;
+    }
+
+    .input-area{
+        padding:20px;
+        border-top:1px solid #eee;
+    }
+
+    form{
+        display:flex;
+        gap:12px;
+    }
+
+    input{
+        flex:1;
+        padding:15px;
+        border:1px solid #ccc;
+        border-radius:12px;
+        font-size:16px;
+    }
+
+    button{
+        background:#2e7d32;
+        color:white;
+        border:none;
+        padding:15px 25px;
+        border-radius:12px;
+        cursor:pointer;
+        font-size:16px;
+    }
+
+    button:hover{
+        background:#1b5e20;
+    }
+
+    .welcome{
+        text-align:center;
+        color:#666;
+        padding:80px 20px;
+    }
+
+    .footer{
+        text-align:center;
+        padding:15px;
+        color:#666;
+        font-size:14px;
+        border-top:1px solid #eee;
+    }
+
+    @media(max-width:768px){
+
+        .user-message{
+            margin-left:0;
+        }
+
+        .bot-message{
+            margin-right:0;
+        }
+
+        form{
+            flex-direction:column;
+        }
+    }
+</style>
+    <script>
+        window.onload = function() {
+            window.scrollTo(0, document.body.scrollHeight);
+        };
+    </script>
+    <script>
+        function showLoader() {
+            document.getElementById("loader").style.display = "block";
+        }
+    </script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+    <h1>🌱 EcoChef AI</h1>
+    <p>Reduce Food Waste using IBM Granite + RAG</p>
+</div>
+
+<div class="chat-container">
+
+    {% if chat_history %}
+
+    {% for chat in chat_history %}
+
+        <div class="user-message">
+            <span class="label">👤 You</span>
+            {{ chat.question }}
+        </div>
+
+        <div class="bot-message">
+            <span class="label">🤖 EcoChef AI</span>
+
+            <div style="white-space: pre-wrap; line-height:1.8;">
+                {{ chat.answer }}
+            </div>
+        </div>
+
+        <br>
+
+    {% endfor %}
+
+{% else %}
+
+    <div class="welcome">
+        <h2>Welcome to EcoChef AI</h2>
+        <br>
+        <p>
+            Ask about food storage, leftover recipes,
+            nutrition tips, sustainability and food waste reduction.
+        </p>
+    </div>
+
+{% endif %}
+
+</div>
+
+<div class="input-area">
+    <div id="loader" style="display:none; text-align:center; margin-bottom:20px;">
+        🤖 EcoChef AI is thinking...
+    </div>
+    <form method="POST" onsubmit="showLoader()">
+
+        <input
+            type="text"
+            name="question"
+            placeholder="Ask something..."
+            required
+        >
+
+        <button type="submit">
+            Ask
+        </button>
+
+        <button
+            type="submit"
+            name="clear"
+            value="true"
+            style="
+                background:#c62828;
+                color:white;
+                border:none;
+                padding:15px 25px;
+                border-radius:12px;
+                cursor:pointer;
+            "
+        >
+            Clear Chat
+        </button>
+
+    </form>
+
+</div>
+
+<div class="footer">
+    SDG 12 • Responsible Consumption & Production
+</div>
+
+</div>
+
+</body>
+</html>
