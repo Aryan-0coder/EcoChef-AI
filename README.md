@@ -147,6 +147,10 @@ http://127.0.0.1:5000
 EcoChef AI contributes to reducing food waste by helping users store food correctly, reuse leftovers effectively, and make informed sustainability decisions.
 
 ---
+## Live Demo
+
+🌐 Live Application:
+https://ecochef-ai-production.up.railway.app/
 
 
 
