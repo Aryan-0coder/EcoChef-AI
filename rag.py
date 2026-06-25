@@ -32,6 +32,20 @@ model = ModelInference(
 
 def get_answer(query):
 
+    food_keywords = [
+            "food", "recipe", "cook", "cooking",
+            "meal", "vegetable", "fruit",
+            "nutrition", "storage", "ingredient",
+            "leftover", "kitchen", "potato",
+            "onion", "tomato", "spinach",
+            "waste", "sustainability"
+        ]
+
+        if not any(word in query.lower() for word in food_keywords):
+            return (
+                "EcoChef AI specializes in food storage, recipes, nutrition, sustainability, and food waste reduction. Please ask a food-related question.",
+                []
+            )
     results = collection.query(
         query_texts=[query],
         n_results=3
@@ -44,11 +58,15 @@ def get_answer(query):
     prompt = f"""
     You are EcoChef AI.
 
-    Answer naturally in a helpful way.
+    You ONLY answer questions related to:
 
-    Give only the answer.
-    Do not mention the context.
-    Do not explain where the information came from.
+    - Food storage
+    - Recipes
+    - Nutrition
+    - Sustainability
+    - Food waste reduction
+
+    If the question is outside these topics, politely refuse.
 
     Context:
     {retrieved_chunk}
