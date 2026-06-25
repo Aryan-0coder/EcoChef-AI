@@ -32,20 +32,6 @@ model = ModelInference(
 
 def get_answer(query):
 
-    food_keywords = [
-            "food", "recipe", "cook", "cooking",
-            "meal", "vegetable", "fruit",
-            "nutrition", "storage", "ingredient",
-            "leftover", "kitchen", "potato",
-            "onion", "tomato", "spinach",
-            "waste", "sustainability"
-        ]
-
-        if not any(word in query.lower() for word in food_keywords):
-            return (
-                "EcoChef AI specializes in food storage, recipes, nutrition, sustainability, and food waste reduction. Please ask a food-related question.",
-                []
-            )
     results = collection.query(
         query_texts=[query],
         n_results=3
@@ -53,12 +39,18 @@ def get_answer(query):
 
     retrieved_chunks = results["documents"][0]
 
+    if not retrieved_chunks:
+        return (
+            "I don't have enough information in my knowledge base to answer that food-related question.",
+            []
+        )   
+
     retrieved_chunk = "\n\n".join(retrieved_chunks)
 
     prompt = f"""
     You are EcoChef AI.
 
-    You ONLY answer questions related to:
+    You specialize only in:
 
     - Food storage
     - Recipes
@@ -66,7 +58,11 @@ def get_answer(query):
     - Sustainability
     - Food waste reduction
 
-    If the question is outside these topics, politely refuse.
+    Use only the provided context.
+
+    If the context does not contain enough information, reply:
+
+    "I don't have enough information in my knowledge base to answer that food-related question."
 
     Context:
     {retrieved_chunk}
