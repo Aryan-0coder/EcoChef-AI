@@ -151,6 +151,9 @@ EcoChef AI contributes to reducing food waste by helping users store food correc
 
 🌐 Live Application:
 https://ecochef-ai-production.up.railway.app/
+OR
+https://ecochef-ai-krqr.onrender.com/
+
 
 
 
