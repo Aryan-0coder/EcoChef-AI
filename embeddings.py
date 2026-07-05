@@ -13,7 +13,7 @@ _credentials = Credentials(
 
 # Hosted embedding model on watsonx.ai (no local ONNX / onnxruntime needed).
 _embedder = Embeddings(
-    model_id="ibm/slate-125m-english-rtrvr",
+    model_id="ibm/granite-embedding-278m-multilingual",
     credentials=_credentials,
     project_id=os.getenv("PROJECT_ID")
 )
