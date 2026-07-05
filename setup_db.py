@@ -1,5 +1,7 @@
 import chromadb
 
+from embeddings import embed_texts
+
 def create_database():
 
     files = [
@@ -26,8 +28,11 @@ def create_database():
 
     client = chromadb.PersistentClient(path="./chroma_db")
 
+    # embedding_function=None: we supply watsonx embeddings ourselves, so
+    # ChromaDB never loads its local ONNX model (keeps memory low).
     collection = client.get_or_create_collection(
-        name="food_knowledge"
+        name="food_knowledge",
+        embedding_function=None
     )
 
     existing = collection.count()
@@ -36,6 +41,7 @@ def create_database():
 
         collection.add(
             documents=chunks,
+            embeddings=embed_texts(chunks),
             ids=[str(i) for i in range(len(chunks))]
         )
 

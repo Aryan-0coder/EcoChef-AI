@@ -5,6 +5,8 @@ from dotenv import load_dotenv
 from ibm_watsonx_ai import Credentials
 from ibm_watsonx_ai.foundation_models import ModelInference
 
+from embeddings import embed_texts
+
 load_dotenv()
 from setup_db import create_database
 create_database()
@@ -33,7 +35,7 @@ model = ModelInference(
 def get_answer(query):
 
     results = collection.query(
-        query_texts=[query],
+        query_embeddings=embed_texts([query]),
         n_results=3
     )
 
